@@ -15,8 +15,8 @@ class HandleText {
     std::string eraseSubStrings(const std::string& mainStr, const std::unordered_set<std::string> & strList);
     std::unordered_set<std::string> stopwords;
     std::unordered_map<std::string,std::string> nouns;
-    fasttext::FastText ft;
-
+    fasttext::FastText LanguageIdentificationFT;
+    fasttext::FastText SentenceClassificationFT;
 public:
     HandleText();
     std::vector<std::string> handle(std::string input);

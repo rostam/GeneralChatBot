@@ -28,8 +28,7 @@ HandleText::HandleText() {
         nouns[line.substr(0,pos)] = line.substr(pos, 30) ;
     }
 
-
-    ft.loadModel("/home/rostam/Downloads/lid.176.bin");
+    LanguageIdentificationFT.loadModel("/home/rostam/Downloads/lid.176.bin");
 }
 
 /*
@@ -54,11 +53,16 @@ std::vector<std::string> HandleText::handle(std::string input) {
 //    _chatLogic->SendMessageToUser("The domain of your sentence is: ");
 //    _chatLogic->SendMessageToUser(messageStopWordsRemoved);
 
-    std::istringstream myiss(messageStopWordsRemoved);
+    std::istringstream myiss(input);
     std::vector<std::pair<fasttext::real, std::string>> predictions;
-    ft.predictLine(myiss, predictions, 1, 0);
-    if(predictions.size() >= 1) {
-        std::string rett = predictions[0].second;
+    LanguageIdentificationFT.predictLine(myiss, predictions, 2, 0.1);
+    if(!predictions.empty()) {
+        std::string predicted = predictions[0].second;
+        std::string rett;
+        if(predicted.find("de") != std::string::npos) rett = "German";
+        else if(predicted.find("en") !=std::string::npos || predicted.find("ca") !=std::string::npos) rett = "English";
+        else if(predicted.find("es") !=std::string::npos) rett = "Spanish";
+        else rett = "the languages other than German, English, and Spanish.";
         ret.push_back(std::string("You entered your message in ") + rett);
     }
 //    std::wstring_convert<std::codecvt_utf8_utf16<wchar_t>> converter;
