@@ -7,7 +7,6 @@
 #include <vector>
 #include <fstream>
 
-#include "fasttext/fasttext.h"
 
 HandleText::HandleText() {
     std::ifstream in("GermanStopWords.txt");
@@ -28,6 +27,9 @@ HandleText::HandleText() {
         int pos = line.find(',');
         nouns[line.substr(0,pos)] = line.substr(pos, 30) ;
     }
+
+
+    ft.loadModel("/home/rostam/Downloads/lid.176.bin");
 }
 
 /*
@@ -51,8 +53,14 @@ std::vector<std::string> HandleText::handle(std::string input) {
     std::string messageStopWordsRemoved = eraseSubStrings(input, stopwords);
 //    _chatLogic->SendMessageToUser("The domain of your sentence is: ");
 //    _chatLogic->SendMessageToUser(messageStopWordsRemoved);
-    fasttext::FastText ft;
-    ft.loadModel("/home/rostam/Downloads/lid.176.bin");
+
+    std::istringstream myiss(messageStopWordsRemoved);
+    std::vector<std::pair<fasttext::real, std::string>> predictions;
+    ft.predictLine(myiss, predictions, 1, 0);
+    if(predictions.size() >= 1) {
+        std::string rett = predictions[0].second;
+        ret.push_back(std::string("You entered your message in ") + rett);
+    }
 //    std::wstring_convert<std::codecvt_utf8_utf16<wchar_t>> converter;
 //    std::string MessageStopWordsRemovedStemmed  = converter.to_bytes(Cistem::stem(converter.from_bytes(messageStopWordsRemoved)));
 //    _chatLogic->SendMessageToUser(MessageStopWordsRemovedStemmed);
@@ -70,4 +78,6 @@ std::vector<std::string> HandleText::handle(std::string input) {
             else if(inf.find("Vorname") != std::string::npos) output += "(PERSON) ";
         }
     }
+
+    return ret;
 }

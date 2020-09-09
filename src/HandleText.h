@@ -7,11 +7,15 @@
 
 #include <unordered_set>
 #include <unordered_map>
+#include <vector>
+
+#include "fasttext/fasttext.h"
 
 class HandleText {
     std::string eraseSubStrings(const std::string& mainStr, const std::unordered_set<std::string> & strList);
     std::unordered_set<std::string> stopwords;
     std::unordered_map<std::string,std::string> nouns;
+    fasttext::FastText ft;
 
 public:
     HandleText();
