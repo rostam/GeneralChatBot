@@ -19,7 +19,7 @@ std::string imgBasePath = dataPath + "images/";
 bool ChatBotApp::OnInit()
 {
     // create window with name and show it
-    ChatBotFrame *chatBotFrame = new ChatBotFrame(wxT("Udacity ChatBot"));
+    ChatBotFrame *chatBotFrame = new ChatBotFrame(wxT("ChatBot"));
     chatBotFrame->Show(true);
 
     return true;
@@ -38,10 +38,21 @@ ChatBotFrame::ChatBotFrame(const wxString &title) : wxFrame(NULL, wxID_ANY, titl
     int idTextXtrl = 1;
     _userTextCtrl = new wxTextCtrl(ctrlPanel, idTextXtrl, "", wxDefaultPosition, wxSize(width, 50), wxTE_PROCESS_ENTER, wxDefaultValidator, wxTextCtrlNameStr);
     Connect(idTextXtrl, wxEVT_TEXT_ENTER, wxCommandEventHandler(ChatBotFrame::OnEnter));
+    _userTextCtrl->SetFont(wxFont( 18,wxFONTFAMILY_SWISS,wxFONTSTYLE_NORMAL ,wxFONTWEIGHT_NORMAL));
+
+
+    int idTextXtrl2 = 5;
+    _userTextCtrl2 = new wxTextCtrl(ctrlPanel, idTextXtrl2, "ChatBot", wxDefaultPosition, wxSize(width, 50), wxTE_RICH2||wxTE_MULTILINE, wxDefaultValidator, wxTextCtrlNameStr);
+//    _userTextCtrl2->SetDefaultStyle(wxTextAttr(*wxRED));
+//    _userTextCtrl2->AppendText("ChatBot");
+    _userTextCtrl2->SetFont(wxFont( 30,wxFONTFAMILY_SWISS,wxFONTSTYLE_NORMAL ,wxFONTWEIGHT_BOLD));
+    _userTextCtrl2->SetBackgroundColour(*wxLIGHT_GREY);
+    _userTextCtrl2->SetEditable(false);
 
     // create vertical sizer for panel alignment and add panels
     wxBoxSizer *vertBoxSizer = new wxBoxSizer(wxVERTICAL);
-    vertBoxSizer->AddSpacer(90);
+//    vertBoxSizer->AddSpacer(90);
+    vertBoxSizer->Add(_userTextCtrl2, 1, wxEXPAND | wxALL,5);
     vertBoxSizer->Add(_panelDialog, 6, wxEXPAND | wxALL, 0);
     vertBoxSizer->Add(_userTextCtrl, 1, wxEXPAND | wxALL, 5);
     ctrlPanel->SetSizer(vertBoxSizer);
@@ -105,29 +116,16 @@ ChatBotPanelDialog::ChatBotPanelDialog(wxWindow *parent, wxWindowID id)
     // allow for PNG images to be handled
     wxInitAllImageHandlers();
 
-    //// STUDENT CODE
-    ////
-
     // create chat logic instance
     _chatLogic = new ChatLogic(); 
 
     // pass pointer to chatbot dialog so answers can be displayed in GUI
     _chatLogic->SetPanelDialogHandle(this);
-
-
-    ////
-    //// EOF STUDENT CODE
 }
 
 ChatBotPanelDialog::~ChatBotPanelDialog()
 {
-    //// STUDENT CODE
-    ////
-
     delete _chatLogic;
-
-    ////
-    //// EOF STUDENT CODE
 }
 
 void ChatBotPanelDialog::AddDialogItem(wxString text, bool isFromUser)

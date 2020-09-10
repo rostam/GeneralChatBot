@@ -61,6 +61,8 @@ private:
     // control elements
     ChatBotPanelDialog *_panelDialog;
     wxTextCtrl *_userTextCtrl;
+    wxTextCtrl *_userTextCtrl2;
+
 
     // events
     void OnEnter(wxCommandEvent &WXUNUSED(event));

@@ -29,6 +29,7 @@ HandleText::HandleText() {
     }
 
     LanguageIdentificationFT.loadModel("/home/rostam/Downloads/lid.176.bin");
+//    SentenceClassificationFT.train()
 }
 
 /*
