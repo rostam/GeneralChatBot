@@ -1,9 +1,10 @@
 __label__1 , Wie geht es dir
 __label__1 , Wie geht
 __label__1 , Laeuft es bei dir
-__label__1 , Laeuft es bei dir
+__label__1 , Laeuft es
 __label__1 , Was ist los
 __label__1 , Etwas neues
+__label__1 , es geht mir gut
 __label__2 , Wo hast du Urlaub gemacht
 __label__2 , Wo gehst du zum Urlaub
 __label__2 , Ich war in Rom für Urlaub
@@ -11,8 +12,13 @@ __label__2 , Ich reise gerne
 __label__2 , Ich reise gerne nach Spanien
 __label__2 , Wo moechtest du reisen
 __label__3 , Wie war Fussball gestern
-__label__3 , Bayern Muenchen
+__label__3 , Wer spielt fuer Bayern Muenchen
 __label__3 , Was von Sport machst du
 __label__3 , Ich spiele bei einem Mannschaft
 __label__3 , Fussball ist eine der bekanntesten Sportarten weltweit.
 __label__3 , Die Bundesliga ist eine der erfolgreichsten Ligen Europas.
+__label__4 , Welche Python Bibliotheken benutzst du
+__label__4 , Welche Programmiersprache ist die Beste?
+__label__4 , Was ist maschinelles lernen
+__label__4 , Wo findet man eine gute Dokumentation fuer Python
+__label__4 , wo findet man gute buecher fur java

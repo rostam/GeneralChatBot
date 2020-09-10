@@ -18,5 +18,5 @@ with open("GermanNouns.csv", "r") as f:
             else:
                 ws.append(first + "," + "OTHERS")
 
-with open("GermanNounsProper.csv", "w") as fw:
+with open("data/GermanNounsProper.csv", "w") as fw:
     fw.write('\n'.join(ws))

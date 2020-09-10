@@ -47,20 +47,26 @@ HandleText::HandleText() {
     {
         std::istringstream iss(line);
         std::string a;
-        if (!(iss >> a)) { break; } // error
-
-        // process pair (a,b)
+        if (!(iss >> a)) { break; }
         stopwords.insert(a);
     }
 
-    std::ifstream in2("GermanNouns.csv");
+    std::ifstream in2("data/GermanNounsProper.csv");
     while (std::getline(in2, line))
     {
         int pos = line.find(',');
         nouns[line.substr(0,pos)] = line.substr(pos, 30) ;
     }
 
-    LanguageIdentificationFT.loadModel("/home/rostam/Downloads/lid.176.bin");
+    std::ifstream in3("data/classes.csv");
+    int cnt = 1;
+    while (std::getline(in3, line))
+    {
+        labels_classes[std::string("__label__") + std::to_string(cnt)] = line;
+        cnt++;
+    }
+
+//    LanguageIdentificationFT.loadModel("lid.176.bin");
     fasttext::Args a = fasttext::Args();
     a.parseArgs({"fasttext","supervised", "-input", "data/train.csv", "-output", "model_cooking"});
     SentenceClassificationFT.train(a);
@@ -90,25 +96,24 @@ std::vector<std::string> HandleText::handle(std::string input) {
 //    _chatLogic->SendMessageToUser("The domain of your sentence is: ");
 //    _chatLogic->SendMessageToUser(messageStopWordsRemoved);
 
-    std::istringstream myiss(input);
-    std::vector<std::pair<fasttext::real, std::string>> predictions;
-    LanguageIdentificationFT.predictLine(myiss, predictions, 2, 0.1);
-    if(!predictions.empty()) {
-        std::string predicted = predictions[0].second;
-        std::string rett;
-        if(predicted.find("de") != std::string::npos) rett = "German";
-        else if(predicted.find("en") !=std::string::npos || predicted.find("ca") !=std::string::npos) rett = "English";
-        else if(predicted.find("es") !=std::string::npos) rett = "Spanish";
-        else rett = "the languages other than German, English, and Spanish.";
-        ret.push_back(std::string("You entered your message in ") + rett);
-    }
+//    std::istringstream myiss(input);
+//    std::vector<std::pair<fasttext::real, std::string>> predictions;
+//    LanguageIdentificationFT.predictLine(myiss, predictions, 2, 0.1);
+//    if(!predictions.empty()) {
+//        std::string predicted = predictions[0].second;
+//        std::string rett;
+//        if(predicted.find("de") != std::string::npos) rett = "German";
+//        else if(predicted.find("en") !=std::string::npos || predicted.find("ca") !=std::string::npos) rett = "English";
+//        else if(predicted.find("es") !=std::string::npos) rett = "Spanish";
+//        else rett = "the languages other than German, English, and Spanish.";
+//        ret.push_back(std::string("You entered your message in ") + rett);
+//    }
 
     std::vector<std::pair<fasttext::real, std::string>> predictions2;
     std::istringstream myiss2(input);
     SentenceClassificationFT.predictLine(myiss2, predictions2, 2, 0.1);
-    ret.push_back(std::string("You are talking about ") + std::to_string(predictions2.size()));
     if(!predictions2.empty()) {
-        ret.push_back(std::string("You are talking about ") + predictions2[0].second);
+        ret.push_back(std::string("You are talking about ") + labels_classes[predictions2[0].second]);
     }
 
 

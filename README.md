@@ -27,7 +27,7 @@ There are different approaches toward the recognition as follows,
   * Mac: same deal as make - [install Xcode command line tools](https://developer.apple.com/xcode/features/)
   * Windows: recommend using [MinGW](http://www.mingw.org/)
 
-A version of [fasttext library](https://github.com/facebookresearch/fastText) is already copied inside the source directory.
+- A version of [fasttext library](https://github.com/facebookresearch/fastText) is already copied inside the source directory.
 So there is no need for installation. 
 
 ## Basic Build Instructions
