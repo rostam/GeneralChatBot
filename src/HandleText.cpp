@@ -55,7 +55,7 @@ HandleText::HandleText() {
     while (std::getline(in2, line))
     {
         int pos = line.find(',');
-        nouns[line.substr(0,pos)] = line.substr(pos, 30) ;
+        nouns[line.substr(0,pos)] = line.substr(pos + 1) ;
     }
 
     std::ifstream in3("data/classes.csv");
@@ -126,12 +126,9 @@ std::vector<std::string> HandleText::handle(std::string input) {
     std::string a;
     std::string output;
     while (iss >> a) {
-        output += a + " ";
         if(nouns.find(a) != nouns.end()) {
             std::string inf = nouns[a];
-            if(inf.find("Toponym") != std::string::npos) output += "(LOCATION) ";
-            else if(inf.find("Nachname") != std::string::npos) output += "(PERSON) ";
-            else if(inf.find("Vorname") != std::string::npos) output += "(PERSON) ";
+            if(inf != "OTHERS") ret.push_back(a + " (" + inf+ ")");
         }
     }
 

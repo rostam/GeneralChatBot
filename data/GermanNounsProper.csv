@@ -16628,7 +16628,7 @@ Dschungelcamp,OTHERS
 Dschungelpfad,OTHERS
 Dschungelwald,OTHERS
 Dschunke,OTHERS
-Du,OTHERS
+,OTHERS
 Du,NAME
 Dual,OTHERS
 Dualform,OTHERS
@@ -61530,7 +61530,6 @@ Rollzeit,OTHERS
 Rolof,NAME
 Roluf,NAME
 Rom,LOCATION
-Rom,OTHERS
 Romagna,LOCATION
 Roman,OTHERS
 Roman,NAME
@@ -86011,11 +86010,12 @@ Uebungsflug,OTHERS
 Uebungsleiter,OTHERS
 Uebungsleiterin,OTHERS
 Uebungsstunde,OTHERS
-Ćevapčići,OTHERS
-ČSSR,LOCATION
-Čevapčići,OTHERS
-Œuvre,OTHERS
-Šeqel,OTHERS
-Živinice,LOCATION
-ǃXóõ,OTHERS
-Ḫāriǧit,OTHERS
+Python,TECH
+Java,TECH
+Cpp,TECH
+Windows,TECH
+Programming,TECH
+Programmiersprache,TECH
+Dokumentation,TECH
+API,TECH
+Compiler,TECH

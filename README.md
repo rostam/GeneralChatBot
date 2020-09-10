@@ -15,6 +15,9 @@ There are different approaches toward the recognition as follows,
 2. Sentence classification based on Fasttext library
 2. Removing the stopwords
 
+## An example of chat
+![chat](screenshot.png)
+
 ## Dependencies for Running Locally
 * cmake >= 3.7
   * All OSes: [click here for installation instructions](https://cmake.org/install/)
