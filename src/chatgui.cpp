@@ -34,11 +34,12 @@ ChatBotFrame::ChatBotFrame(const wxString &title) : wxFrame(NULL, wxID_ANY, titl
     // create controls and assign them to control panel
     _panelDialog = new ChatBotPanelDialog(ctrlPanel, wxID_ANY);
 
+
     // create text control for user input
     int idTextXtrl = 1;
     _userTextCtrl = new wxTextCtrl(ctrlPanel, idTextXtrl, "", wxDefaultPosition, wxSize(width, 50), wxTE_PROCESS_ENTER, wxDefaultValidator, wxTextCtrlNameStr);
     Connect(idTextXtrl, wxEVT_TEXT_ENTER, wxCommandEventHandler(ChatBotFrame::OnEnter));
-    _userTextCtrl->SetFont(wxFont( 18,wxFONTFAMILY_SWISS,wxFONTSTYLE_NORMAL ,wxFONTWEIGHT_NORMAL));
+    _userTextCtrl->SetFont(wxFont( 16,wxFONTFAMILY_SWISS,wxFONTSTYLE_NORMAL ,wxFONTWEIGHT_NORMAL));
 
 
     int idTextXtrl2 = 5;
