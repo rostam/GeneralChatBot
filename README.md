@@ -15,6 +15,9 @@ There are different approaches toward the recognition as follows,
 2. Sentence classification based on Fasttext library
 2. Removing the stopwords
 
+There is a simple training set under data/train.csv that users can replace
+it with whatver they need to.
+
 ## An example of chat
 ![chat](screenshot.png)
 
