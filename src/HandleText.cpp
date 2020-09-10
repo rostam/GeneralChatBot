@@ -7,6 +7,38 @@
 #include <vector>
 #include <fstream>
 
+void HandleText::train(const std::vector<std::string> args) {
+    fasttext::Args a = fasttext::Args();
+    a.parseArgs(args);
+    std::shared_ptr<fasttext::FastText> fasttext = std::make_shared<fasttext::FastText>();
+    std::string outputFileName;
+
+    if (a.hasAutotune() &&
+        a.getAutotuneModelSize() != fasttext::Args::kUnlimitedModelSize) {
+        outputFileName = a.output + ".ftz";
+    } else {
+        outputFileName = a.output + ".bin";
+    }
+    std::ofstream ofs(outputFileName);
+    if (!ofs.is_open()) {
+        throw std::invalid_argument(
+                outputFileName + " cannot be opened for saving.");
+    }
+    ofs.close();
+//    if (a.hasAutotune()) {
+//        Autotune autotune(fasttext);
+//        autotune.train(a);
+//    } else {
+        fasttext->train(a);
+//    }
+//    fasttext->saveModel(outputFileName);
+    fasttext->saveVectors(a.output + ".vec");
+    if (a.saveOutput) {
+        fasttext->saveOutput(a.output + ".output");
+    }
+}
+
+
 
 HandleText::HandleText() {
     std::ifstream in("GermanStopWords.txt");
@@ -29,7 +61,11 @@ HandleText::HandleText() {
     }
 
     LanguageIdentificationFT.loadModel("/home/rostam/Downloads/lid.176.bin");
-//    SentenceClassificationFT.train()
+    fasttext::Args a = fasttext::Args();
+    a.parseArgs({"fasttext","supervised", "-input", "data/train.csv", "-output", "model_cooking"});
+    SentenceClassificationFT.train(a);
+//    SentenceClassificationFT.saveModel("test.bin");
+//    SentenceClassificationFT.loadModel("test.bin");
 }
 
 /*
@@ -66,6 +102,16 @@ std::vector<std::string> HandleText::handle(std::string input) {
         else rett = "the languages other than German, English, and Spanish.";
         ret.push_back(std::string("You entered your message in ") + rett);
     }
+
+    std::vector<std::pair<fasttext::real, std::string>> predictions2;
+    std::istringstream myiss2(input);
+    SentenceClassificationFT.predictLine(myiss2, predictions2, 2, 0.1);
+    ret.push_back(std::string("You are talking about ") + std::to_string(predictions2.size()));
+    if(!predictions2.empty()) {
+        ret.push_back(std::string("You are talking about ") + predictions2[0].second);
+    }
+
+
 //    std::wstring_convert<std::codecvt_utf8_utf16<wchar_t>> converter;
 //    std::string MessageStopWordsRemovedStemmed  = converter.to_bytes(Cistem::stem(converter.from_bytes(messageStopWordsRemoved)));
 //    _chatLogic->SendMessageToUser(MessageStopWordsRemovedStemmed);

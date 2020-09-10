@@ -17,6 +17,8 @@ class HandleText {
     std::unordered_map<std::string,std::string> nouns;
     fasttext::FastText LanguageIdentificationFT;
     fasttext::FastText SentenceClassificationFT;
+    void train(const std::vector<std::string> args);
+
 public:
     HandleText();
     std::vector<std::string> handle(std::string input);
