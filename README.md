@@ -27,11 +27,12 @@ There are different approaches toward the recognition as follows,
   * Mac: same deal as make - [install Xcode command line tools](https://developer.apple.com/xcode/features/)
   * Windows: recommend using [MinGW](http://www.mingw.org/)
 
-A version of fasttext library is already inside the source directory.
+A version of [fasttext library](https://github.com/facebookresearch/fastText) is already copied inside the source directory.
+So there is no need for installation. 
 
 ## Basic Build Instructions
 
-1. Clone this repo.
+1. git clone https://github.com/rostam/GermanChatBot
 2. Make a build directory in the top level directory: `mkdir build && cd build`
 3. Compile: `cmake .. && make`
 4. Run it: `./GermanChatBot`.
