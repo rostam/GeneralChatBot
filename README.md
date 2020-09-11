@@ -48,8 +48,8 @@ So there is no need for installation.
 
 ## Project Rubrics
 #### A variety of control structures are used in the project.
-Different control structures can be found in [the functions EraseSubStrings, handle, and the constructure HandleText::HandleText() ](https://github.com/rostam/GermanChatBot/blob/master/src/HandleText.cpp)
-
+Different control structures can be found in different files like [the functions EraseSubStrings, handle, and the constructure HandleText::HandleText() ](https://github.com/rostam/GermanChatBot/blob/master/src/HandleText.cpp) or [HandleGermanText.cpp](https://github.com/rostam/GermanChatBot/blob/master/src/HandleGermanText.cpp).
+ 
 #### The project reads data from an external file or writes data to a file as part of the necessary operation of the program.
 #### The project accepts input from a user as part of the necessary operation of the program.
 
