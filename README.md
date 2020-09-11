@@ -14,6 +14,7 @@ There are different approaches toward the recognition as follows,
 1. Search in a list of known important German words
 2. Sentence classification based on Fasttext library
 2. Removing the stopwords
+3. Retraining based on the user input
 
 There is a simple training set under data/train.csv that users can replace
 it with whatver they need to. The user also can retrian a specific sentence
