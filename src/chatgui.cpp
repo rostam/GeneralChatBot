@@ -3,6 +3,7 @@
 #include <wx/image.h>
 #include <string>
 #include <thread>
+#include <future>
 #include "chatbot.h"
 #include "chatlogic.h"
 #include "chatgui.h"
@@ -73,25 +74,28 @@ ChatBotFrame::ChatBotFrame(const wxString &title) : wxFrame(NULL, wxID_ANY, titl
 }
 
 void ChatBotFrame::OnWrong(wxCommandEvent &WXUNUSED(event)) {
+    std::promise<std::string> prom;
+    std::future<std::string> fut = prom.get_future();
+
     if(std::string(userText.mb_str()) == "") return;
     auto dlg = new wxTextEntryDialog(this,
                                      "What is the correct class (Greetings,Travel,Sport,Technology):",
                                      "Improve Training", "Travel");
     dlg->ShowModal();
     wxString val = dlg->GetValue();
-    // Define a lamda expression
-    auto f = [](std::string val) {
 
+    // Define a lamda expression
+    auto f = [](std::future<std::string>& val) {
         std::ofstream out("data/update_train.csv", std::ofstream::out | std::ofstream::app);
-        out << val << std::endl;
+        out << val.get() << std::endl;
         out.close();
     };
     {
         std::unique_lock<std::mutex> lck(mtx);
-        std::thread thread_object(f, std::string(val.mb_str()) + "," + std::string(userText.mb_str()));
+        prom.set_value (std::string(val.mb_str()) + "," + std::string(userText.mb_str()));
+        std::thread thread_object(f, std::ref(fut));
         thread_object.join();
     }
-
 }
 
 void ChatBotFrame::OnEnter(wxCommandEvent &WXUNUSED(event))
