@@ -49,6 +49,8 @@ So there is no need for installation.
 Different control structures can be found in [the functions eraseSubStrings, handle, and the constructure HandleText::HandleText() ](https://github.com/rostam/GermanChatBot/blob/master/src/HandleText.cpp)
 
 ### The project reads data from an external file or writes data to a file as part of the necessary operation of the program.
+### The project accepts input from a user as part of the necessary operation of the program.
+
 Three files are read in the project as follows:
 ```c++
     std::ifstream in("GermanStopWords.txt");
@@ -81,3 +83,41 @@ Three files are read in the project as follows:
     a.parseArgs({"fasttext","supervised", "-input", "data/train.csv", "-output", "model_cooking"});
     SentenceClassificationFT.train(a);
 ```
+### The project code is organized into classes with class attributes to hold the data, and class methods to perform tasks.
+### All class data members are explicitly specified as public, protected, or private.
+### All class members that are set to argument values are initialized through member initialization lists.
+### All class member functions document their effects, either through function names, comments, or formal documentation. Member functions do not change program state in undocumented ways.
+
+```c++
+//
+// Created by rostam on 09.09.20.
+//
+
+#ifndef GERMANCHATBOT_HANDLETEXT_H
+#define GERMANCHATBOT_HANDLETEXT_H
+
+#include <unordered_set>
+#include <unordered_map>
+#include <vector>
+
+#include "fasttext/fasttext.h"
+
+class HandleText {
+    std::string eraseSubStrings(const std::string& mainStr, const std::unordered_set<std::string> & strList);
+    std::unordered_set<std::string> stopwords;
+    std::unordered_map<std::string,std::string> nouns;
+    std::unordered_map<std::string,std::string> labels_classes;
+    fasttext::FastText LanguageIdentificationFT;
+    fasttext::FastText SentenceClassificationFT;
+    void train(const std::vector<std::string> args);
+
+public:
+    HandleText();
+    std::vector<std::string> handle(std::string input);
+};
+
+
+#endif //GERMANCHATBOT_HANDLETEXT_H
+```
+
+### 
