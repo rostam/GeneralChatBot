@@ -81,12 +81,17 @@ void ChatBotFrame::OnWrong(wxCommandEvent &WXUNUSED(event)) {
     wxString val = dlg->GetValue();
     // Define a lamda expression
     auto f = [](std::string val) {
+
         std::ofstream out("data/update_train.csv", std::ofstream::out | std::ofstream::app);
         out << val << std::endl;
         out.close();
     };
-    std::thread thread_object(f, std::string(val.mb_str())+","+std::string(userText.mb_str()));
-    thread_object.join();
+    {
+        std::unique_lock<std::mutex> lck(mtx);
+        std::thread thread_object(f, std::string(val.mb_str()) + "," + std::string(userText.mb_str()));
+        thread_object.join();
+    }
+
 }
 
 void ChatBotFrame::OnEnter(wxCommandEvent &WXUNUSED(event))

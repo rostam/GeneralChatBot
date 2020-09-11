@@ -2,6 +2,8 @@
 #define CHATGUI_H_
 
 #include <wx/wx.h>
+#include <mutex>
+
 //#define __GXX_ABI_VERSION 1011
 class ChatLogic; // forward declaration
 
@@ -64,6 +66,7 @@ private:
     wxTextCtrl *_userTextCtrl2;
     wxString userText;
     std::vector<std::string> values = {"Greetings","Travel","Sport","Technology"};
+    std::mutex mtx;
 
     // events
     void OnEnter(wxCommandEvent &WXUNUSED(event));
