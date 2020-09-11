@@ -2,6 +2,7 @@
 #include <wx/colour.h>
 #include <wx/image.h>
 #include <string>
+#include <thread>
 #include "chatbot.h"
 #include "chatlogic.h"
 #include "chatgui.h"
@@ -50,22 +51,48 @@ ChatBotFrame::ChatBotFrame(const wxString &title) : wxFrame(NULL, wxID_ANY, titl
     _userTextCtrl2->SetBackgroundColour(*wxLIGHT_GREY);
     _userTextCtrl2->SetEditable(false);
 
+    auto buttonpanels = new wxPanel(ctrlPanel, 6);
+    auto t1 = new wxButton(buttonpanels, 6,"Correct");
+    auto t2 = new wxButton(buttonpanels, 7,"Wrong");
+    wxBoxSizer *horBoxSizer = new wxBoxSizer(wxHORIZONTAL);
+    horBoxSizer->Add(t1,1,wxEXPAND | wxALL);
+    horBoxSizer->Add(t2,1,wxEXPAND | wxALL);
+    buttonpanels->SetSizer(horBoxSizer);
+    Connect(7, wxEVT_BUTTON, wxCommandEventHandler(ChatBotFrame::OnWrong));
     // create vertical sizer for panel alignment and add panels
     wxBoxSizer *vertBoxSizer = new wxBoxSizer(wxVERTICAL);
 //    vertBoxSizer->AddSpacer(90);
     vertBoxSizer->Add(_userTextCtrl2, 1, wxEXPAND | wxALL,5);
     vertBoxSizer->Add(_panelDialog, 6, wxEXPAND | wxALL, 0);
     vertBoxSizer->Add(_userTextCtrl, 1, wxEXPAND | wxALL, 5);
+    vertBoxSizer->Add(buttonpanels, 1, wxEXPAND | wxALL, 5);
     ctrlPanel->SetSizer(vertBoxSizer);
 
     // position window in screen center
     this->Centre();
 }
 
+void ChatBotFrame::OnWrong(wxCommandEvent &WXUNUSED(event)) {
+    if(std::string(userText.mb_str()) == "") return;
+    auto dlg = new wxTextEntryDialog(this,
+                                     "What is the correct class (Greetings,Travel,Sport,Technology):",
+                                     "Improve Training", "Travel");
+    dlg->ShowModal();
+    wxString val = dlg->GetValue();
+    // Define a lamda expression
+    auto f = [](std::string val) {
+        std::ofstream out("data/update_train.csv", std::ofstream::out | std::ofstream::app);
+        out << val << std::endl;
+        out.close();
+    };
+    std::thread thread_object(f, std::string(val.mb_str())+","+std::string(userText.mb_str()));
+    thread_object.join();
+}
+
 void ChatBotFrame::OnEnter(wxCommandEvent &WXUNUSED(event))
 {
     // retrieve text from text control
-    wxString userText = _userTextCtrl->GetLineText(0);
+    userText = _userTextCtrl->GetLineText(0);
 
     // add new user text to dialog
     _panelDialog->AddDialogItem(userText, true);

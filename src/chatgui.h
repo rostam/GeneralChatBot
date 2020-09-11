@@ -62,11 +62,12 @@ private:
     ChatBotPanelDialog *_panelDialog;
     wxTextCtrl *_userTextCtrl;
     wxTextCtrl *_userTextCtrl2;
-
+    wxString userText;
+    std::vector<std::string> values = {"Greetings","Travel","Sport","Technology"};
 
     // events
     void OnEnter(wxCommandEvent &WXUNUSED(event));
-
+    void OnWrong(wxCommandEvent &WXUNUSED(event));
 public:
     // constructor / desctructor
     ChatBotFrame(const wxString &title);
