@@ -16,7 +16,7 @@ class ChatBot
 private:
     ChatLogic *_chatLogic;
 
-    std::unique_ptr<HandleText> handleText = std::make_unique<HandleGermanText>();;
+    std::unique_ptr<HandleText> handleText = std::make_unique<HandleGermanText>();
 
     // proprietary functions
     int ComputeLevenshteinDistance(std::string s1, std::string s2);
