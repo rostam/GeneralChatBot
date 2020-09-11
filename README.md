@@ -1,5 +1,5 @@
-# GermanChatBot
-### A chatbot for german language
+# GeneralChatBot
+### A chatbot for different languages
 
 In this project, I have implemented a chatbot in which the topics of 
 the user input is identified. For now, it is only working for German
