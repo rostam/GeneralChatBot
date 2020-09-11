@@ -42,3 +42,42 @@ So there is no need for installation.
 2. Make a build directory in the top level directory: `mkdir build && cd build`
 3. Compile: `cmake .. && make`
 4. Run it: `./GermanChatBot`.
+
+
+## Project Rubrics
+### A variety of control structures are used in the project.
+Different control structures can be found in [the functions eraseSubStrings, handle, and the constructure HandleText::HandleText() ](https://github.com/rostam/GermanChatBot/blob/master/src/HandleText.cpp)
+
+### The project reads data from an external file or writes data to a file as part of the necessary operation of the program.
+Three files are read in the project as follows:
+```c++
+    std::ifstream in("GermanStopWords.txt");
+    std::string line;
+    while (std::getline(in, line))
+    {
+        std::istringstream iss(line);
+        std::string a;
+        if (!(iss >> a)) { break; }
+        stopwords.insert(a);
+    }
+
+    std::ifstream in2("data/GermanNounsProper.csv");
+    while (std::getline(in2, line))
+    {
+        int pos = line.find(',');
+        nouns[line.substr(0,pos)] = line.substr(pos + 1) ;
+    }
+
+    std::ifstream in3("data/classes.csv");
+    int cnt = 1;
+    while (std::getline(in3, line))
+    {
+        labels_classes[std::string("__label__") + std::to_string(cnt)] = line;
+        cnt++;
+    }
+
+//    LanguageIdentificationFT.loadModel("lid.176.bin");
+    fasttext::Args a = fasttext::Args();
+    a.parseArgs({"fasttext","supervised", "-input", "data/train.csv", "-output", "model_cooking"});
+    SentenceClassificationFT.train(a);
+```
