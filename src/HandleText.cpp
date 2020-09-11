@@ -108,6 +108,11 @@ std::vector<std::string> HandleText::handle(std::string input) {
     return ret;
 }
 
+/**
+ * Classify sentences
+ * @param input
+ * @return the different classification
+ */
 std::vector<std::string> HandleText::ClassifySentence(const std::string& input) {
     std::vector<std::pair<fasttext::real, std::string>> predictions2;
     std::istringstream myiss2(input);

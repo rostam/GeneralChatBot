@@ -24,10 +24,20 @@ HandleGermanText::HandleGermanText() : HandleText("data/train.csv") {
     }
 }
 
+/**
+ * Removes language specific stop words
+ * @param input the user input
+ * @return the input after the stop words are removed
+ */
 std::string HandleGermanText::RemoveStopWords(const std::string& input) {
     return EraseSubStrings(input, stopwords);
 }
 
+/**
+ * Recognize language specific nouns
+ * @param input the usre input
+ * @return
+ */
 std::vector<std::string> HandleGermanText::RecognizeNouns(const std::string &input) {
     std::istringstream iss(RemoveStopWords(input));
     std::string res;
