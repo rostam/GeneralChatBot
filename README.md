@@ -16,7 +16,8 @@ There are different approaches toward the recognition as follows,
 2. Removing the stopwords
 
 There is a simple training set under data/train.csv that users can replace
-it with whatver they need to.
+it with whatver they need to. The user also can retrian a specific sentence
+by clicking the wrong button and enetring the new class.
 
 ## An example of chat
 ![chat](screenshot.png)
