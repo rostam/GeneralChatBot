@@ -53,7 +53,7 @@ Different control structures can be found in [the functions EraseSubStrings, han
 
 Three files are read in the project as follows in [HandleGermanText.cpp](src/HandleGermanText.cpp):
 ```c++
-    std::ifstream in("GermanStopWords.txt");
+    std::ifstream in("data/GermanStopWords.txt");
     std::string line;
     while (std::getline(in, line))
     {
@@ -68,14 +68,6 @@ Three files are read in the project as follows in [HandleGermanText.cpp](src/Han
     {
         int pos = line.find(',');
         nouns[line.substr(0,pos)] = line.substr(pos + 1) ;
-    }
-
-    std::ifstream in3("data/classes.csv");
-    int cnt = 1;
-    while (std::getline(in3, line))
-    {
-        labels_classes[std::string("__label__") + std::to_string(cnt)] = line;
-        cnt++;
     }
 ```
 ### The project code is organized into classes with class attributes to hold the data, and class methods to perform tasks.
