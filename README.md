@@ -77,11 +77,6 @@ Three files are read in the project as follows in [HandleGermanText.cpp](src/Han
         labels_classes[std::string("__label__") + std::to_string(cnt)] = line;
         cnt++;
     }
-
-//    LanguageIdentificationFT.loadModel("lid.176.bin");
-    fasttext::Args a = fasttext::Args();
-    a.parseArgs({"fasttext","supervised", "-input", "data/train.csv", "-output", "model_cooking"});
-    SentenceClassificationFT.train(a);
 ```
 ### The project code is organized into classes with class attributes to hold the data, and class methods to perform tasks.
 ### All class data members are explicitly specified as public, protected, or private.
