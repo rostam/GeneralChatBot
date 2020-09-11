@@ -7,6 +7,7 @@
 #include "chatbot.h"
 #include "chatlogic.h"
 #include "chatgui.h"
+#include <sstream>
 
 // size of chatbot window
 const int width = 414;
@@ -84,16 +85,54 @@ void ChatBotFrame::OnWrong(wxCommandEvent &WXUNUSED(event)) {
     dlg->ShowModal();
     wxString val = dlg->GetValue();
 
-    // Define a lamda expression
-    auto f = [](std::future<std::string>& val) {
-        std::ofstream out("data/update_train.csv", std::ofstream::out | std::ofstream::app);
-        out << val.get() << std::endl;
-        out.close();
+    std::mutex m;
+    std::condition_variable cv;
+    bool ready = false;
+    bool writeToFile = false;
+    auto CheckTraingingValueInTrainingFile = [&ready,&writeToFile](std::string val) -> bool {
+        std::ifstream in("data/update_train.csv");
+        std::string line;
+        while (std::getline(in, line))
+        {
+            std::istringstream iss(line);
+            std::string a;
+            if (!(iss >> a)) {
+                break;
+            }
+            if(a == val) {
+                ready = true;
+                writeToFile = false;
+                return false;
+            }
+        }
+        writeToFile = true;
+        ready = true;
+        return true;
     };
+
+    auto AppendTraningValueToTrainingFile = [&cv,&ready,&m,&writeToFile](std::future<std::string>& val) {
+        std::unique_lock<std::mutex> lk(m);
+        cv.wait(lk, [&ready]{return ready;});
+        if(writeToFile) {
+            std::ofstream out("data/update_train.csv", std::ofstream::out | std::ofstream::app);
+            out << val.get() << std::endl;
+            out.close();
+        }
+        lk.unlock();
+        cv.notify_one();
+    };
+
+//    CheckTraingingValueInTrainingFile(std::string(userText.mb_str()) + "," + std::string(val.mb_str()));
+    {
+        std::thread thread_object(CheckTraingingValueInTrainingFile, std::string(userText.mb_str()) + "," + std::string(val.mb_str()));
+        thread_object.join();
+    }
+
+
     {
         std::unique_lock<std::mutex> lck(mtx);
-        prom.set_value (std::string(val.mb_str()) + "," + std::string(userText.mb_str()));
-        std::thread thread_object(f, std::ref(fut));
+        prom.set_value (  std::string(userText.mb_str()) + "," + std::string(val.mb_str()));
+        std::thread thread_object(AppendTraningValueToTrainingFile, std::ref(fut));
         thread_object.join();
     }
 }
