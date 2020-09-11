@@ -12,16 +12,17 @@
 #include "fasttext/fasttext.h"
 
 class HandleText {
-    std::string eraseSubStrings(const std::string& mainStr, const std::unordered_set<std::string> & strList);
-    std::unordered_set<std::string> stopwords;
-    std::unordered_map<std::string,std::string> nouns;
     std::unordered_map<std::string,std::string> labels_classes;
     fasttext::FastText LanguageIdentificationFT;
     fasttext::FastText SentenceClassificationFT;
     void train(const std::vector<std::string> args);
-
+protected:
+    std::string EraseSubStrings(const std::string& mainStr, const std::unordered_set<std::string> & strList);
+    std::vector<std::string> ClassifySentence(const std::string& input);
+    virtual std::string RemoveStopWords(const std::string& input) = 0;
+    virtual std::vector<std::string> RecognizeNouns(const std::string& input) = 0;
 public:
-    HandleText();
+    explicit HandleText(const std::string& TrainingFile);
     std::vector<std::string> handle(std::string input);
 };
 

@@ -14,9 +14,9 @@
 // constructor WITHOUT memory allocation
 ChatBot::ChatBot()
 {
+//    handleText = std::make_unique<HandleGermanText>();
     // invalidate data handles
     _chatLogic = nullptr;
-    _rootNode = nullptr;
 }
 
 // constructor WITH memory allocation
@@ -26,7 +26,6 @@ ChatBot::ChatBot(std::string filename)
     
     // invalidate data handles
     _chatLogic = nullptr;
-    _rootNode = nullptr;
 }
 
 ChatBot::~ChatBot() = default;
@@ -35,8 +34,8 @@ ChatBot::~ChatBot() = default;
 
 void ChatBot::ReceiveMessageFromUser(std::string message)
 {
-    std::vector<std::string> vs = handleText.handle(message);
-    for(auto s : vs)
+    std::vector<std::string> vs = handleText->handle(message);
+    for(const auto& s : vs)
         _chatLogic->SendMessageToUser(s);
 }
 

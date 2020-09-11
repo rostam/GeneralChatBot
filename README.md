@@ -46,7 +46,7 @@ So there is no need for installation.
 
 ## Project Rubrics
 ### A variety of control structures are used in the project.
-Different control structures can be found in [the functions eraseSubStrings, handle, and the constructure HandleText::HandleText() ](https://github.com/rostam/GermanChatBot/blob/master/src/HandleText.cpp)
+Different control structures can be found in [the functions EraseSubStrings, handle, and the constructure HandleText::HandleText() ](https://github.com/rostam/GermanChatBot/blob/master/src/HandleText.cpp)
 
 ### The project reads data from an external file or writes data to a file as part of the necessary operation of the program.
 ### The project accepts input from a user as part of the necessary operation of the program.
@@ -103,7 +103,7 @@ Three files are read in the project as follows:
 #include "fasttext/fasttext.h"
 
 class HandleText {
-    std::string eraseSubStrings(const std::string& mainStr, const std::unordered_set<std::string> & strList);
+    std::string EraseSubStrings(const std::string& mainStr, const std::unordered_set<std::string> & strList);
     std::unordered_set<std::string> stopwords;
     std::unordered_map<std::string,std::string> nouns;
     std::unordered_map<std::string,std::string> labels_classes;
