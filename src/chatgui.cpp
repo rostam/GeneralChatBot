@@ -34,18 +34,18 @@ ChatBotFrame::ChatBotFrame(const wxString &title) : wxFrame(NULL, wxID_ANY, titl
     ChatBotFrameImagePanel *ctrlPanel = new ChatBotFrameImagePanel(this);
 
     // create controls and assign them to control panel
-    _panelDialog = new ChatBotPanelDialog(ctrlPanel, wxID_ANY);
+    _panelDialog = std::make_unique<ChatBotPanelDialog>(ctrlPanel, wxID_ANY);
 
 
     // create text control for user input
     int idTextXtrl = 1;
-    _userTextCtrl = new wxTextCtrl(ctrlPanel, idTextXtrl, "", wxDefaultPosition, wxSize(width, 50), wxTE_PROCESS_ENTER, wxDefaultValidator, wxTextCtrlNameStr);
+    _userTextCtrl = std::make_unique<wxTextCtrl>(ctrlPanel, idTextXtrl, "", wxDefaultPosition, wxSize(width, 50), wxTE_PROCESS_ENTER, wxDefaultValidator, wxTextCtrlNameStr);
     Connect(idTextXtrl, wxEVT_TEXT_ENTER, wxCommandEventHandler(ChatBotFrame::OnEnter));
     _userTextCtrl->SetFont(wxFont( 16,wxFONTFAMILY_SWISS,wxFONTSTYLE_NORMAL ,wxFONTWEIGHT_NORMAL));
 
 
     int idTextXtrl2 = 5;
-    _userTextCtrl2 = new wxTextCtrl(ctrlPanel, idTextXtrl2, "ChatBot", wxDefaultPosition, wxSize(width, 50), wxTE_RICH2||wxTE_MULTILINE, wxDefaultValidator, wxTextCtrlNameStr);
+    _userTextCtrl2 = std::make_unique<wxTextCtrl>(ctrlPanel, idTextXtrl2, "ChatBot", wxDefaultPosition, wxSize(width, 50), wxTE_RICH2||wxTE_MULTILINE, wxDefaultValidator, wxTextCtrlNameStr);
 //    _userTextCtrl2->SetDefaultStyle(wxTextAttr(*wxRED));
 //    _userTextCtrl2->AppendText("ChatBot");
     _userTextCtrl2->SetFont(wxFont( 30,wxFONTFAMILY_SWISS,wxFONTSTYLE_NORMAL ,wxFONTWEIGHT_BOLD));
@@ -63,9 +63,9 @@ ChatBotFrame::ChatBotFrame(const wxString &title) : wxFrame(NULL, wxID_ANY, titl
     // create vertical sizer for panel alignment and add panels
     wxBoxSizer *vertBoxSizer = new wxBoxSizer(wxVERTICAL);
 //    vertBoxSizer->AddSpacer(90);
-    vertBoxSizer->Add(_userTextCtrl2, 1, wxEXPAND | wxALL,5);
-    vertBoxSizer->Add(_panelDialog, 6, wxEXPAND | wxALL, 0);
-    vertBoxSizer->Add(_userTextCtrl, 1, wxEXPAND | wxALL, 5);
+    vertBoxSizer->Add(_userTextCtrl2.get(), 1, wxEXPAND | wxALL,5);
+    vertBoxSizer->Add(_panelDialog.get(), 6, wxEXPAND | wxALL, 0);
+    vertBoxSizer->Add(_userTextCtrl.get(), 1, wxEXPAND | wxALL, 5);
     vertBoxSizer->Add(buttonpanels, 1, wxEXPAND | wxALL, 5);
     ctrlPanel->SetSizer(vertBoxSizer);
 

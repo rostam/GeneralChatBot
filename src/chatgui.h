@@ -3,6 +3,7 @@
 
 #include <wx/wx.h>
 #include <mutex>
+#include <memory>
 
 //#define __GXX_ABI_VERSION 1011
 class ChatLogic; // forward declaration
@@ -15,13 +16,7 @@ private:
     wxBoxSizer *_dialogSizer;
     wxBitmap _image;
 
-    //// STUDENT CODE
-    ////
-
     ChatLogic *_chatLogic;
-
-    ////
-    //// EOF STUDENT CODE
 
 public:
     // constructor / destructor
@@ -61,9 +56,8 @@ class ChatBotFrame : public wxFrame
 {
 private:
     // control elements
-    ChatBotPanelDialog *_panelDialog;
-    wxTextCtrl *_userTextCtrl;
-    wxTextCtrl *_userTextCtrl2;
+    std::unique_ptr<ChatBotPanelDialog> _panelDialog;
+    std::unique_ptr<wxTextCtrl> _userTextCtrl, _userTextCtrl2;
     wxString userText;
     std::vector<std::string> values = {"Greetings","Travel","Sport","Technology"};
     std::mutex mtx;
