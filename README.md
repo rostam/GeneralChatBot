@@ -1,29 +1,25 @@
 # GeneralChatBot
-### A chatbot for different languages
+## A Multilingual Chatbot Framework
 
-In this project, I have implemented a chatbot in which the topics of 
-the user input is identified. For now, it is only working for German
-language because of the training data. So, with the suitable training
-data, it will work for any other languages. Also, since the standard 
-C++ string class only supports ascii characters, the german sentences
-should be entered by english format which means ä, ö, ü, and ß should
-be replaced with ae, oe, ue, ss.
+Welcome to the GeneralChatBot project! This is a multilingual chatbot framework that identifies the topics of user input. Currently, it supports the German language due to the available training data. However, with the right training data, it can be extended to support any language.
 
+Please note that as the standard C++ string class only supports ASCII characters, German sentences should be entered in English format. This means special characters like ä, ö, ü, and ß should be replaced with ae, oe, ue, ss respectively.
 
-There are different approaches toward the recognition as follows,
-1. Search in a list of known important German words
-2. Sentence classification based on Fasttext library
-2. Removing the stopwords
-3. Retraining based on the user input
+### Recognition Approaches
+The chatbot uses several approaches to recognize and process user input:
 
-There is a simple training set under data/train.csv that users can replace
-it with whatver they need to. The user also can retrian a specific sentence
-by clicking the wrong button and enetring the new class.
+1. Searching in a list of known important German words.
+2. Sentence classification based on the Fasttext library.
+3. Removing the stopwords.
+4. Retraining based on the user input.
 
-## An example of chat
-![chat](screenshot.png)
+### Training Data
+A simple training set is provided under `data/train.csv`. Users can replace this with their own data as needed. The chatbot also allows users to retrain a specific sentence by clicking the 'wrong' button and entering the new class.
 
-## Dependencies for Running Locally
+![Chat Example](screenshot.png)
+
+## Local Setup
+### Dependencies
 * cmake >= 3.7
   * All OSes: [click here for installation instructions](https://cmake.org/install/)
 * make >= 4.1 (Linux, Mac), 3.81 (Windows)
@@ -35,21 +31,19 @@ by clicking the wrong button and enetring the new class.
   * Mac: same deal as make - [install Xcode command line tools](https://developer.apple.com/xcode/features/)
   * Windows: recommend using [MinGW](http://www.mingw.org/)
 
-- A version of [fasttext library](https://github.com/facebookresearch/fastText) is already copied inside the source directory.
-So there is no need for installation. 
+A version of the [fasttext library](https://github.com/facebookresearch/fastText) is already included in the source directory, so there's no need for separate installation. 
 
-## Basic Build Instructions
-
-1. git clone https://github.com/rostam/GermanChatBot
-2. Make a build directory in the top level directory: `mkdir build && cd build`
-3. Compile: `cmake .. && make`
-4. Run it: `./GermanChatBot`.
-
+### Build Instructions
+1. Clone the repository: `git clone https://github.com/rostam/GeneralChatBot`
+2. Create a build directory in the top level directory: `mkdir build && cd build`
+3. Compile the project: `cmake .. && make`
+4. Run the chatbot: `./GeneralChatBot`.
 
 ## Project Rubrics
-#### A variety of control structures are used in the project.
-Different control structures can be found in different files like [the functions EraseSubStrings, handle, and the constructure HandleText::HandleText() ](https://github.com/rostam/GermanChatBot/blob/master/src/HandleText.cpp) or [HandleGermanText.cpp](https://github.com/rostam/GermanChatBot/blob/master/src/HandleGermanText.cpp).
- 
+The project adheres to a variety of rubrics including the use of control structures, reading and writing data from external files, user input handling, class organization, inheritance, multithreading, and more. Detailed examples and explanations can be found in the source code files like `HandleText.cpp`, `HandleGermanText.cpp`, and `chatgui.cpp`.
+
+For more information, please refer to the source code and comments therein. Contributions to extend the functionality of this chatbot, especially for supporting more languages, are welcome!
+
 #### The project reads data from an external file or writes data to a file as part of the necessary operation of the program.
 #### The project accepts input from a user as part of the necessary operation of the program.
 
